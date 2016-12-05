@@ -38,7 +38,7 @@ var VoronoiTreemap = {
         var random_points = this.getRandomPointsInPolygon(bounding_polygon, node.children.length);
         for (var c = 0; c < node.children.length; c++) {
 	    // calculate percentage weights
-            var size = (node.children[c].value * 1.0 / node.value)
+            var size = (node.children[c].value * 1.0 / node.value);
             sites.push(new Vertex(random_points[c][0],random_points[c][1], null, epsilon, null, false, size));
         }
 
@@ -80,7 +80,6 @@ var VoronoiTreemap = {
 	for (var i = 0; i < n_points; i++) {
             var firstRand = Math.random();
             var secondRand = Math.random();
-            console.log(typeof firstRand, firstRand)
             var p = [rect.x + firstRand * rect.w, rect.y + secondRand * rect.h];
             //	    var p = [rect.x + this.random() * rect.w, rect.y + this.random() * rect.h];
 	    // see if p in polygon itself

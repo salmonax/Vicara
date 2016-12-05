@@ -57,7 +57,7 @@ function get_selected_polygon() {
 
   // var select_polygon = d3.select("#select_polygon").node().value;
   var select_polygon = options.polygon;
-  console.log(select_polygon);
+  // console.log(select_polygon);
   if (select_polygon == "rectangle") {
     return entire_svg_polygon;
   }
@@ -81,7 +81,7 @@ function get_selected_dataset() {
     return flare_json;
   }
   else if (select_dataset == "paper_simple_example") {
-    console.log(paper_simple_example_json);
+    // console.log(paper_simple_example_json);
     return paper_simple_example_json;
   }
   else if (select_dataset == "random_10_3_000") {
@@ -92,6 +92,26 @@ function get_selected_dataset() {
 
 function make_d3_poly(d) {
   return "M" + d.join("L") + "Z";
+}
+
+function get_poly_center_x(d) {
+  // console.log(JSON.stringify(d.polygon));
+  return 100;
+}
+
+function get_poly_center_y(d) {
+  return 100;
+}
+
+function getCentroid(poly) {
+  var centroid = { x: 0, y: 0 };
+  for (var i = 0; i < poly.length; i++) {
+    centroid.x += poly[i][0];
+    centroid.y += poly[i][1];
+  }
+  centroid.x/=poly.length;
+  centroid.y/=poly.length;
+  return centroid;
 }
 
 
@@ -108,11 +128,13 @@ var paint = function(nodes){
     .attr("height", height)
     .attr("fill", background_color);
 
+
+
   // strokes by depth
   // a bit awkward to use the UI element here
   // var stroke_by_depth = d3.select("#checkbox_stroke").property('checked'); 
   var stroke_by_depth = options.stroke_by_depth;
-  console.log('stroke by depth: ', stroke_by_depth);
+  // console.log('stroke by depth: ', stroke_by_depth);
   var stroke_min = 2,
     stroke_max = stroke_by_depth ? 10 : stroke_min,
     stroke_levels = 3,// could determine from max depth...see color...
@@ -121,7 +143,7 @@ var paint = function(nodes){
   // color
   // var select_color = d3.select("#select_color").node().value;
   var select_color = options.color;
-  console.log('select color: ', select_color);
+  // console.log('select color: ', select_color);
   if (select_color == "linear") {
     var nodes_all_depths = nodes.map(function(x) {return x.depth});
     var nodes_max_depth = Math.max.apply(null, nodes_all_depths);
@@ -140,7 +162,7 @@ var paint = function(nodes){
   // any maximum depth?
   // var select_max_depth = d3.select("#select_max_depth").node().value;
   var select_max_depth = options.max_depth;
-  console.log('max depth: ', select_max_depth);
+  // console.log('max depth: ', select_max_depth);
   var max_depth = 12; // or whatever big thing...
   if (select_max_depth != "none") {
     max_depth = parseInt(select_max_depth);
@@ -149,21 +171,46 @@ var paint = function(nodes){
   
   
   // consolidate and draw polygons
-    var selected_node_list = [];
-    for (var i = 0; i < nodes.length; i++){
-        var node = nodes[i];
-        if (node.polygon != null && node.depth <= max_depth){
-            selected_node_list.push(node);
-        }
-    }
-    var polylines = svg_container.append("g").selectAll("path").data(selected_node_list);
-  polylines.enter().append("path")
-          .attr("d", function(d) {return make_d3_poly(d.polygon);})
-      .attr("stroke-width", function(d) { return Math.max(stroke_max - stroke_delta*d.depth, stroke_min) + "px";})
-          .attr("stroke", "black")
-          .attr("fill", color_func);
-    polylines.exit().remove();
-  
+  var selected_node_list = [];
+  for (var i = 0; i < nodes.length; i++){
+      var node = nodes[i];
+      if (node.polygon != null && node.depth <= max_depth){
+          selected_node_list.push(node);
+      }
+  }
+  var testText = d3.select("body")
+    .append("text")
+    .classed('label', true)
+    .text('Just a random text string');
+
+
+
+  var polylines = svg_container.append("g").selectAll("path").data(selected_node_list);
+  var pEnter = polylines.enter();
+  pEnter.append("path")
+    .attr("d", function(d) {
+      return make_d3_poly(d.polygon);
+    })
+    .attr("stroke-width", function(d) { return Math.max(stroke_max - stroke_delta*d.depth, stroke_min) + "px";})
+    .attr("stroke", "black")
+    .attr("fill", color_func);
+  pEnter.append("text")
+    .classed('label', true)
+    .attr('x', function(d) {
+      return getCentroid(d.polygon).x-(d.name.length*10); // hard coding for now
+    })
+    .attr('y', function(d) {
+      return getCentroid(d.polygon).y;
+    })
+    .attr('width', 20)
+    .attr('height', 20)
+    .attr('fill', 'white')
+    .text(function(d) {
+
+      return (!d.children) ? d.name : null;
+    });
+  polylines.exit().remove();
+
   
   // also circles?  only for leaves?
   // a subset of selected_node_list as it turns out
