@@ -1,0 +1,20 @@
+
+body, html {
+  padding: 0px;
+  margin: 0px;
+  background-color: black;
+}
+#svgid {
+  margin-left: -5px;
+  margin-top: -5px;
+  padding: 0px;
+}
+
+#treemap { 
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  color: rgb(150,200,100);
+  background-color: rgb(40,50,100);
+}

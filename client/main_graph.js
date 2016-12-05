@@ -1,0 +1,251 @@
+var options = {
+  polygon: 'rectangle', // rectangle, triangle, pentagon, octogon, circle
+  max_depth: 'none', // acceptable values: 1-12 or none
+  stroke_by_depth: true, // boolean
+  color: 'linear' // acceptable values: name, linear, none
+
+}
+
+function make_regular_polygon(width, height, border, sides) {
+  var center = [width*0.5, height*0.5],
+    width_radius = (width - 2*border) * 0.5,
+    height_radius = (height - 2*border) * 0.5,
+    radius = Math.min( width_radius, height_radius ),
+    angle_radians = 2*Math.PI / sides,
+    initial_angle = sides%2==0 ? -Math.PI/2 -angle_radians*0.5 : -Math.PI/2, // subtract angles
+    result = [],
+    somevariable = 0;
+  
+  // special case few sides
+  if (sides == 3) {
+    center[1] += height_radius / 3.0; // can always do this (I think?)
+  
+    radius_for_width = width_radius * 2 / Math.sqrt(3);
+    radius_for_height = height_radius * 4.0 / 3.0;
+    radius = Math.min(radius_for_width, radius_for_height);
+  }
+  else if (sides == 4) {
+    radius *= Math.sqrt(2);
+  }
+  
+  for (var i = 0; i < sides; i++) {
+    result.push([center[0] + radius * Math.cos(initial_angle - i * angle_radians), center[1] + radius * Math.sin(initial_angle - i * angle_radians)]);
+  }
+
+  return result;
+}
+
+// here we set up the svg
+// var width = 800;
+// var height = 1000;
+var width = window.innerWidth+20;
+var height = window.innerHeight+20;
+var border = 10;
+var svg_container = d3.select("#treemap").append("svg")
+  .attr("width",width)
+  .attr("height",height)
+  .attr("id","svgid");
+
+///////// bounding polygon
+function get_selected_polygon() {
+  var width_less_border = width - 2 * border;
+  var height_less_border = height - 2 * border;
+  var entire_svg_polygon = [[border,border],
+    [border,height_less_border],
+    [width_less_border,height_less_border],
+    [width_less_border,border]];
+
+  // var select_polygon = d3.select("#select_polygon").node().value;
+  var select_polygon = options.polygon;
+  console.log(select_polygon);
+  if (select_polygon == "rectangle") {
+    return entire_svg_polygon;
+  }
+  else if (select_polygon == "triangle") {
+    return make_regular_polygon(width, height, border, 3);
+  }
+  else if (select_polygon == "pentagon") {
+    return make_regular_polygon(width, height, border, 5);
+  }
+  else if (select_polygon == "octogon") {
+    return make_regular_polygon(width, height, border, 8);
+  }
+  else if (select_polygon == "circle") {
+    return make_regular_polygon(width, height, border, 100);
+  } 
+}
+
+function get_selected_dataset() {
+  var select_dataset = d3.select("#select_dataset").node().value;
+  if (select_dataset == "flare") {
+    return flare_json;
+  }
+  else if (select_dataset == "paper_simple_example") {
+    console.log(paper_simple_example_json);
+    return paper_simple_example_json;
+  }
+  else if (select_dataset == "random_10_3_000") {
+    return random_10_3_000_json;
+  }
+}
+
+
+function make_d3_poly(d) {
+  return "M" + d.join("L") + "Z";
+}
+
+
+var paint = function(nodes){
+  svg_container.selectAll("path").remove();
+
+  // background color
+  //var background_color = "lightgray";
+  var background_color = "none";
+  svg_container.append("g").append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", width)
+    .attr("height", height)
+    .attr("fill", background_color);
+
+  // strokes by depth
+  // a bit awkward to use the UI element here
+  // var stroke_by_depth = d3.select("#checkbox_stroke").property('checked'); 
+  var stroke_by_depth = options.stroke_by_depth;
+  console.log('stroke by depth: ', stroke_by_depth);
+  var stroke_min = 2,
+    stroke_max = stroke_by_depth ? 10 : stroke_min,
+    stroke_levels = 3,// could determine from max depth...see color...
+    stroke_delta = (stroke_max - stroke_min) * 1.0 / stroke_levels;
+  
+  // color
+  // var select_color = d3.select("#select_color").node().value;
+  var select_color = options.color;
+  console.log('select color: ', select_color);
+  if (select_color == "linear") {
+    var nodes_all_depths = nodes.map(function(x) {return x.depth});
+    var nodes_max_depth = Math.max.apply(null, nodes_all_depths);
+    var color_d3_linear = d3.scale.linear().domain([0, nodes_max_depth]).range(["blue","lightblue"]);
+    var color_func = function(d) { return color_d3_linear(d.depth); };
+  }
+  else if (select_color == "name") {
+    var color_d3 = d3.scale.category20c();
+    var color_func = function(d) { return d.children ? color_d3(d.name) : "none"; };
+  }
+  else {
+    // none or some other weird thing ;)
+    var color_func = "lightblue"; // or whatever color
+  }
+  
+  // any maximum depth?
+  // var select_max_depth = d3.select("#select_max_depth").node().value;
+  var select_max_depth = options.max_depth;
+  console.log('max depth: ', select_max_depth);
+  var max_depth = 12; // or whatever big thing...
+  if (select_max_depth != "none") {
+    max_depth = parseInt(select_max_depth);
+  }
+  
+  
+  
+  // consolidate and draw polygons
+    var selected_node_list = [];
+    for (var i = 0; i < nodes.length; i++){
+        var node = nodes[i];
+        if (node.polygon != null && node.depth <= max_depth){
+            selected_node_list.push(node);
+        }
+    }
+    var polylines = svg_container.append("g").selectAll("path").data(selected_node_list);
+  polylines.enter().append("path")
+          .attr("d", function(d) {return make_d3_poly(d.polygon);})
+      .attr("stroke-width", function(d) { return Math.max(stroke_max - stroke_delta*d.depth, stroke_min) + "px";})
+          .attr("stroke", "black")
+          .attr("fill", color_func);
+    polylines.exit().remove();
+  
+  
+  // also circles?  only for leaves?
+  // a subset of selected_node_list as it turns out
+  var leaf_node_list = [];
+    for (var i = 0; i < selected_node_list.length; i++){
+        var node = selected_node_list[i];
+        if (!node.children || node.depth == max_depth){
+            leaf_node_list.push(node);
+        }
+    }
+
+  // disabled because of weirdness with non-leaf centroids
+  // centroid circles
+  //var show_leaf_centroids = d3.select("#checkbox_leaf_centroids").property('checked');
+  if (false) {
+    var center_circles = svg_container.append("g").selectAll(".center.circle").data(leaf_node_list);
+    center_circles.enter().append("circle")
+      .attr("class", "center circle")
+      .attr("cx", function(d) {return (d.site.x);})
+      .attr("cy", function(d) {return (d.site.y);})
+      .attr("r", function(d) {return 5;})
+      //.attr("r", function(d) {return (Math.sqrt(d.weight));})
+      //.attr("r", function(d) {return (Math.max(Math.sqrt(d.weight), 2));})
+      .attr("stroke", "black")
+      .attr("fill", "black");
+  }
+  
+  // weight circles
+  // this does work...but is kind of ugly
+  if (false) {
+    var radius_circles = svg_container.append("g").selectAll(".radius.circle").data(leaf_node_list);
+    radius_circles.enter().append("circle")
+      .attr("class", "radius circle")
+      .attr("cx", function(d) {return (d.site.x);})
+      .attr("cy", function(d) {return (d.site.y);})
+      //.attr("r", function(d) {return 5;})
+      .attr("r", function(d) {return (Math.sqrt(d.weight));})
+      //.attr("r", function(d) {return (Math.max(Math.sqrt(d.weight), 2));})
+      .attr("stroke", "white")
+      .attr("stroke-width", "5px")
+      .attr("fill", "none");
+  }
+}
+
+var newnodes;
+function compute() {
+  // arbitrarily selected for now
+
+  var select_polygon = get_selected_polygon(); 
+
+  var vt = d3.layout.voronoitreemap()
+    .root_polygon(select_polygon)
+    .value(function(d) {return d.size; })
+    .iterations(100);
+  
+  // var select_dataset = get_selected_dataset(); // will 
+  var select_dataset = paper_simple_example_json;
+  newnodes = vt(select_dataset);
+  paint(newnodes);
+}
+
+
+
+// yeah...should probably update on all input changes
+// nope...only the fast ones!
+
+/* Probably will change these with either react State or other means that aren't html elements, who knows */
+// d3.select("#checkbox_stroke").on("click", function() {paint(newnodes)});
+// d3.select("#select_color").on("change", function() {paint(newnodes)});
+// d3.select("#checkbox_leaf_centroids").on("click", function() {paint(newnodes)});
+// d3.select("#select_max_depth").on("change", function() {paint(newnodes)});
+
+// d3.select("#button_compute").on("click", function() {compute();});
+
+function resizeTreemap() {
+  width = window.innerWidth+20;
+  height = window.innerHeight+20;
+  d3.select('#svgid')
+  .attr("width",width)
+  .attr("height",height);
+  compute();
+}
+
+d3.select(window).on('resize.updatesvg', resizeTreemap);
+compute();
