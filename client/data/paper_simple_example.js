@@ -3,7 +3,7 @@ paper_simple_example_json = {
 "children": [
 	{
 	"name": "shallow",
-	"size": 5
+	"size": 6
 	},
 	{
 	"name": "medium",
@@ -21,7 +21,7 @@ paper_simple_example_json = {
 		"children": [
 			{"name": "deep1leaf1", "size": 1},
 			{"name": "deep1leaf2", "size": 1},
-			{"name": "deep1leaf3", "size": 1},
+			{"name": "deep1leaf3", "size": 6},
 			{"name": "deep1leaf4", "size": 1},
 			{"name": "deep1leaf5", "size": 1}
 		]
