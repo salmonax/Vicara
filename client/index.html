@@ -4,24 +4,11 @@
   <meta name="mobile-web-app-capable" content="yes">
   <title>Vicara</title>
   <head>
-    <!-- Firebase 
-      <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
-      <script>
-        // Initialize Firebase
-        var config = {
-          apiKey: "AIzaSyCtYUjYUu4wKkB8fdDCs8NwEpx1jAcpbYg",
-          authDomain: "vicara-205cb.firebaseapp.com",
-          databaseURL: "https://vicara-205cb.firebaseio.com",
-          storageBucket: "vicara-205cb.appspot.com",
-          messagingSenderId: "220126363800"
-        };
-        firebase.initializeApp(config);
-      </script>
-    -->
-
     <!-- Libraries -->
     <script> 
-      window.screen.orientation.lock('portrait');
+      if (window.navigator.userAgent.match(/Android/i)) {
+        window.screen.orientation.lock('portrait');
+      }
     </script>
     <script language="javascript" type="text/javascript" src="lib/jquery-1.11.0.min.js"></script>
     <script language="javascript" type="text/javascript" src="lib/d3.js"></script>
