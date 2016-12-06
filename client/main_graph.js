@@ -183,7 +183,9 @@ var paint = function(nodes){
     .classed('label', true)
     .text('Just a random text string');
 
-
+  var colorShift = function(rgb, num) {
+    return d3.rgb(rgb.r+num, rgb.g+num, rgb.b+num);
+  }
 
   var polylines = svg_container.append("g").selectAll("path").data(selected_node_list);
   var pEnter = polylines.enter();
@@ -193,9 +195,25 @@ var paint = function(nodes){
     })
     .attr("stroke-width", function(d) { return Math.max(stroke_max - stroke_delta*d.depth, stroke_min) + "px";})
     .attr("stroke", "black")
-    .attr("fill", color_func);
+    .attr("fill", color_func)
+    .on('click', function(d) {
+      console.log('timer started!!!');
+    })
+    .on('mouseover', function(d) {
+      var $d = d3.select(this)
+      var color = d3.rgb($d.style("fill"));
+      $d.style("fill", colorShift(color,-25) );
+    })
+    .on('mouseout', function(d) {
+      var $d = d3.select(this)
+      var color = d3.rgb($d.style("fill"));
+      $d.style("fill", colorShift(color,25) );
+
+    })
+
   pEnter.append("text")
     .classed('label', true)
+    .attr('pointer-events', 'none')
     .attr('x', function(d) {
       return getCentroid(d.polygon).x-(d.name.length*10); // hard coding for now
     })

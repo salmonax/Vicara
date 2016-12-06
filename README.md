@@ -2,7 +2,7 @@ Welcome to Vicara
 ==
 Description
 --
-Vicara is a ubiquitous timer for autodidacts, inspired by the pomodoro technique. Its goal is to allow timekeeping across a broad range of interests with minimal effort and peculiar benefit, without ever actually having to set a pomodoro or manage any sort of attention-hogging timekeeping system.
+Vicara is a ubiquitous timer for autodidacts, inspired by the pomodoro technique. Its goal is to allow timekeeping across a broad range of interests with minimal effort and unusual benefit, without ever actually having to set a pomodoro or manage an attention-hogging timekeeping system.
 
 The way it works is very simple: you earn 5 minutes of break time for every 25 minutes of work time. You set timers by thumbing a category on a fullscreen Voronoi treemap interface on your phone. If you want to make sure that you work for at least 25, 50, 75, or 100 minutes on a topic, you can do that, too.
 

@@ -1,97 +1,48 @@
-<!DOCTYPE html>
-<!-- saved from url=(0056)http://cse512-14w.github.io/fp-plvines-djpeter/demo.html -->
-<html class="translated-ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html>
+  <meta charset="utf-8">
+  <title>Voronoi Treemap</title>
+  <head>
+    <!-- Firebase 
+      <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+      <script>
+        // Initialize Firebase
+        var config = {
+          apiKey: "AIzaSyCtYUjYUu4wKkB8fdDCs8NwEpx1jAcpbYg",
+          authDomain: "vicara-205cb.firebaseapp.com",
+          databaseURL: "https://vicara-205cb.firebaseio.com",
+          storageBucket: "vicara-205cb.appspot.com",
+          messagingSenderId: "220126363800"
+        };
+        firebase.initializeApp(config);
+      </script>
+    -->
 
-<title>Voronoi Treemap</title>
+    <!-- Libraries -->
+    <script language="javascript" type="text/javascript" src="lib/jquery-1.11.0.min.js"></script>
+    <script language="javascript" type="text/javascript" src="lib/d3.js"></script>
+    <script language="javascript" type="text/javascript" src="lib/angular.min.js"></script>
 
-<script language="javascript" type="text/javascript" src="lib/jquery-1.11.0.min.js"></script>
-<script language="javascript" type="text/javascript" src="lib/d3.js"></script>
-
-<script language="javascript" type="text/javascript" src="lib/ConvexHull.js"></script>
-<script language="javascript" type="text/javascript" src="lib/PowerDiagram.js"></script>
-<script language="javascript" type="text/javascript" src="lib/VoronoiTreemap.js"></script>
-<script language="javascript" type="text/javascript" src="lib/VoronoiTreemapD3.js"></script>
-
-
-<!-- use below here for the demo -->
-<script language="javascript" type="text/javascript" src="data/flare.js"></script>
-<script language="javascript" type="text/javascript" src="data/paper_simple_example.js"></script>
-<script language="javascript" type="text/javascript" src="data/random_10_3_000.js"></script>
-
-
-
-<link type="text/css" rel="stylesheet" charset="UTF-8" href="./index_files/translateelement.css"></head>
- 
-<body>
-
-<h2>Voronoi Treemap</h2>
-
-
-<div>
-
-<select id="select_dataset">
-<option value="flare">Flare</option>
-<option value="paper_simple_example">Paper example</option>
-<option value="random_10_3_000">Random breadth 10 depth 3</option>
-</select>
-
-<select id="select_polygon">
-<option value="rectangle">Rectangle</option>
-<option value="triangle">Triangle</option>
-<option value="pentagon">Pentagon</option>
-<option value="octogon">Octogon</option>
-<option value="circle">Circle (100-gon)</option>
-</select>
-
-<button type="button" id="button_compute">Compute Diagram!</button>
-
-<br><br>
-
-<label><input type="checkbox" name="checkbox_stroke" id="checkbox_stroke" checked="">Stroke Width</label>
-
-&nbsp;&nbsp;
-
-Color: 
-<select id="select_color">
-  <option value="linear">Linear</option>
-  <option value="name">Name</option>
-  <option value="none">None</option>
-</select>
-
-&nbsp;&nbsp;
-
-<!--
-<label><input type="checkbox" name="checkbox_leaf_centroids" id="checkbox_leaf_centroids">Show Leaf Centroids</label>
-
-&nbsp;&nbsp;
--->
-
-Max depth to show: 
-<select id="select_max_depth">
-  <option value="none"><font><font>None</font></font></option>
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
-  <option value="6">6</option>
-  <option value="7">7</option>
-  <option value="8">8</option>
-  <option value="9">9</option>
-  <option value="10">10</option>
-  <option value="11">11</option>
-  <option value="12">12</option>
-</select>
-
-</div>
-
-<script src="main_graph.js"></script>
+    <!-- Required D3 script -->
+    <script language="javascript" type="text/javascript" src="lib/ConvexHull.js"></script>
+    <script language="javascript" type="text/javascript" src="lib/PowerDiagram.js"></script>
+    <script language="javascript" type="text/javascript" src="lib/VoronoiTreemap.js"></script>
+    <script language="javascript" type="text/javascript" src="lib/VoronoiTreemapD3.js"></script>
 
 
+    <!-- Data -->
+    <script language="javascript" type="text/javascript" src="data/flare.js"></script>
+    <script language="javascript" type="text/javascript" src="data/paper_simple_example.js"></script>
+    <script language="javascript" type="text/javascript" src="data/random_10_3_000.js"></script>
 
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body ng-app='vicara' ng-controller="MainCtrl">
+    <div id="treemap" class='vicara'></div>
 
-<svg width="1000" height="800" id="svgid"></svg><div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="./index_files/translate_24dp.png" width="20" height="20" alt="Google Translate"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">Original text</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">Contribute a better translation</span><span class="activity-link"></span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div>
-main_graph.js></script>
-
-
-<div class="goog-te-spinner-pos"><div class="goog-te-spinner-animation"><svg xmlns="http://www.w3.org/2000/svg" class="gt_spinner" width="48px" height="48px" viewBox="0 0 66 66"><circle class="goog-te-spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div></body></html>
+    <script src="app/app.js"></script>
+    <script src="app/services/voronoi.js"></script>
+    <script src="app/services/util.js"></script>
+    <script src="app/controllers/MainCtrl.js"></script>
+  </body>
+  <!-- // <script src="main_graph.js"></script> -->
+</html>

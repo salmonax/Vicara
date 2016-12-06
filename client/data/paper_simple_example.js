@@ -19,11 +19,11 @@ paper_simple_example_json = {
 	"children": [
 		{"name": "deep1", 
 		"children": [
-			{"name": "deep1leaf1", "size": 1},
-			{"name": "deep1leaf2", "size": 1},
-			{"name": "deep1leaf3", "size": 6},
-			{"name": "deep1leaf4", "size": 1},
-			{"name": "deep1leaf5", "size": 1}
+			{"name": "Code", "size": 1},
+			{"name": "Read", "size": 1},
+			{"name": "Journal Writing", "size": 6},
+			{"name": "MVP", "size": 1},
+			{"name": "Workthrough", "size": 1}
 		]
 		},
 		{"name": "deep2", 
