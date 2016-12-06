@@ -1,3 +1,9 @@
+var seed = 0;
+function seededRandom() {
+  var x = Math.sin(seed++) * 10000;
+  return x - Math.floor(x);
+}
+
 var VoronoiTreemap = {
 
     debugMode: false,
@@ -78,8 +84,8 @@ var VoronoiTreemap = {
 	var rect = this.getPolygonBoundingRect(polygon);
 	var result = []
 	for (var i = 0; i < n_points; i++) {
-            var firstRand = Math.random();
-            var secondRand = Math.random();
+            var firstRand = seededRandom();
+            var secondRand = seededRandom();
             var p = [rect.x + firstRand * rect.w, rect.y + secondRand * rect.h];
             //	    var p = [rect.x + this.random() * rect.w, rect.y + this.random() * rect.h];
 	    // see if p in polygon itself

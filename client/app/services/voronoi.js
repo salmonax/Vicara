@@ -4,7 +4,7 @@
 
 */
 angular.module('vicara')
-.factory('voronoi', function (util) {
+.factory('voronoi', function (util, $rootScope) {
   var options = {
     polygon: 'rectangle', // rectangle, triangle, pentagon, octogon, circle
     max_depth: 'none', // acceptable values: 1-12 or none
@@ -47,6 +47,7 @@ angular.module('vicara')
   // var height = 1000;
   var width = window.innerWidth+20;
   var height = window.innerHeight+20;
+  console.log("width-height on init", width, height);
   var border = 10;
   var svg_container = d3.select("#treemap").append("svg")
     .attr("width",width)
@@ -201,6 +202,7 @@ angular.module('vicara')
     }
 
     var activeTimer = null;
+    var activeTimerName = null;
     var lastInactiveColor = null;
     var activeColor = d3.rgb(230,0,0);
     var activateTimer = function(d, el) {
@@ -213,21 +215,33 @@ angular.module('vicara')
       }
       lastInactiveColor = inactiveColor;
       activeTimer = el;
+      activeTimerName = d.name;
+      $rootScope.$broadcast('timer:activate',{
+        name: d.name
+      });
     };
     var deactivateTimer = function(d, el) {
       var $d = d3.select(el);
       $d.style("fill", lastInactiveColor);
       activeTimer = null;
+      activeTimerName = null;
+      $rootScope.$broadcast('timer:deactivate', {
+        name: d.name
+      });
       // resetLastActiveTimer(el);
     };
 
     var resetLastActiveTimer = function(el) {
       var $last = d3.select(activeTimer);
+      console.log(el);
+      $rootScope.$broadcast('timer:deactivate', {
+        name: activeTimerName
+      });
       var $d = d3.select(el);
-      console.log('???', $d.data.hovering);
       var shiftAmount = $d.data.hovering ? cShift : 0;
       $last.style("fill", colorShift(lastInactiveColor, shiftAmount));
       activeTimer = null; 
+      activeTimerName = null;
       lastInactiveColor = null;
     }
 
@@ -280,7 +294,6 @@ angular.module('vicara')
       .attr('height', 20)
       .attr('fill', 'white')
       .text(function(d) {
-
         return (!d.children) ? d.name : null;
       });
     polylines.exit().remove();
@@ -337,7 +350,9 @@ angular.module('vicara')
 
     var vt = d3.layout.voronoitreemap()
       .root_polygon(select_polygon)
-      .value(function(d) {return d.size; })
+      .value(function(d) {
+        return d.size; 
+      })
       .iterations(100);
     
     // var select_dataset = get_selected_dataset(); // will 
@@ -362,8 +377,9 @@ angular.module('vicara')
   function resizeTreemap() {
     width = window.innerWidth+20;
     height = window.innerHeight+20;
+    console.log("width-height at resize: ", width, height);
     d3.select('#svgid')
-    .attr("width",width)
+    .attr("width", width)
     .attr("height",height);
     compute();
   }
@@ -372,11 +388,26 @@ angular.module('vicara')
     d3.select(window).on('resize.updatesvg', resizeTreemap);
   }
 
-  // compute();
+  function bindTimers(timers) {
+    console.log(timers);
+    d3.selectAll('text').each(function(d,i) {
+      if (d) {
+        d.elapsed = (timers[d.name]) ? timers[d.name].elapsed : 0;
+        if (d.elapsed) { console.log('!!', d.name, d.elapsed); }
+      }
+    });
+    // LOOK HERE
+    d3.selectAll('text').text(function(d) {
+      console.log(d);
+      if (!d || d.children) { return null; }
+      return (d.elapsed) ? d.name + ' ' + d.elapsed : d.name;
+    });
+  }
 
   return {
     compute: compute,
-    bindResizeEvent: bindResizeEvent
+    bindResizeEvent: bindResizeEvent,
+    bindTimers: bindTimers
   }
 
 });
