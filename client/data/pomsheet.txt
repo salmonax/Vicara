@@ -1,0 +1,49 @@
+12/6/2016
+
+8.5 Journal Writing: IDP 4/21, gratitudes, big three,  rambling     X
+9.5 HR, Toy Problem: do the deck shuffle            X
+10  MVP, Backend: set up basic Express routes         X
+10.5  !! MVP, Backend: get the index.html to serve, get it deployed to Heroku!  X
+11  MVP, Mongo: look into configuring MongoLab, investigate local Mongoose    X
+11.5  MVP, Mongo: get db connect, user, and block model in, ponder block name   X
+12.5  ~ MVP, Mongo: make sure posting is working, waffle cognitively for some reason  X
+13  ! MVP, Mongo: verify that the MongoDB login and password work, ready for Heroku X
+15.5  ~~ MVP, Orientation: waste RIDICULOUS time, because Android cache: AARGH! X
+
+12/5/2016
+
+8.5 Journal Writing: IDP 3/21, gratitudes, big three, blue sky goals    X
+10.5  MVP, Readme: write readme and deal with some git craziness      X
+12  ~ MVP, Legacy: grab Bindu from Windows, push to repo, change readme, be slow  XXX
+12.5  MVP, Clicks: add click events and hover events, noodling over stupid RGB  X
+13.5  MVP, Backend: finish hovering, read about firebase, add API-key script code XX
+15.5  MVP, Angular: wrap D3 stuff in Angular, refactor from run to ctrlr    XX
+16  MVP, Timer: work on getting timer to switch states        X
+16.5  MVP, Timer: finally get the goddamn timer switch states to work right in D3 X
+17  ~~ MVP, Timer: fix the horrible insanity of hover offsets, add gradient, color  X
+17.5  MVP, Colors: add BinduRGB with seeded random          X
+18  ! MVP, Colors: implement Bindu colors, re-encounter horrible cShift nightmare X
+19.5  MVP, Binding: start grokking d3-Angular communication, and events   XX
+20  ! MVP, Binding: figure out how to get the binding done for multiple timers  X
+21  ! MVP, Binding: get multiple timers playing and instantiating correctly!  X
+23.5  MVP, Binding: desperately try to figure out how to update the labels in any way XXX
+
+12/4/2016
+
+13  Email, Justin: write a bunch of bullshit and don't send it yet      X
+14  Email, Justin: write some journal stuff, turn it into an e-mail and send it XX
+
+16.5  MVP, Voronoi: start copying over the code and looking through it    X
+17  ~ MVP, Voronoi: irritatingly slackjaw over stupid bower and stupid index.html X
+17.5  MVP, Voronoi: start decoupling main_graph.js from the interface     X
+18  MVP, Voronoi: finish decoupling, work on getting element to be responsive X
+18.5  MVP, Voronoi: abandon CSS-based resize from SO post, try to do an on-change X
+19  MVP, Voronoi: get resizing up, look into seeding, fix margins     X
+19.5  MVP, Voronoi: randomly whiteboard, try to add labels        X
+20  MVP, Voronoi: figure out where to do the text append, mess with text svg  X
+20.5  ~ MVP, Voronoi: try to get center with path.centroid() or getBBox(), but fail X
+21  ~ MVP, Voronoi: write getCentroid(), try to get non-arbitrary text offset X
+
+12/3/2016
+
+17  MVP, Voronoi: set up a basic project, get bower, hold off on wiredep    X

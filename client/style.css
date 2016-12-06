@@ -50,3 +50,86 @@ path {
   height: 200px;
   z-index: 10;
 }
+
+/*
+Crazy stuff for last-minute swipe effect
+*/
+
+#left {
+  background: #69D2E7;
+  height:100%;
+  /* Set width on init */
+}
+
+#center {
+  background: #F38630;
+  height: 100%;
+  /* Set width on init */
+}
+
+#right {
+  background: #A7DBD8;
+  height: 100%;
+  width: 320px;
+  /* Set width on init */
+}
+
+div.carouselWrap {
+  /* Set width to 3x view on init */
+  background: white;
+  height: 100%;
+  color: white;
+  font-family: "Gill Sans / Gill Sans MT", sans-serif;
+  font-size: 3em;
+  line-height: 568px;
+  text-align: center;
+  /*-webkit-transform: translate3d(-320px, 0px, 0px);*/
+}
+
+.animate {
+  -webkit-transition: -webkit-transform 0.2s ease-in;
+  transition: transform 0.2s;
+}
+
+div.float--left {
+  float: left;
+}
+
+/**
+* Generic boilerplate CSS
+*/
+* { margin: 0px; padding: 0px; }
+body {
+  background: #2e2c35;
+  width: 100%; height: 100%;
+}
+div.device {
+/*  height: 798px; width: 378px;
+  width: 440px; height: 807px;*/
+  background: url('http://creativeda.sh/sandbox/bounce_menu/img/iphone_black.png') no-repeat center center; 
+  -webkit-background-size: cover;
+     -moz-background-size: cover;
+       -o-background-size: cover;
+          background-size: cover;
+  position: absolute; margin: auto;
+  top: 0px; bottom: 100px; left: 0px; right: 0px;
+}
+div.screen { 
+  /* Set width and height on init */
+  position: absolute;
+  /*top: 119px; left: 60px;*/
+  overflow: hidden;
+}
+div.content {
+  height:100%;
+  width:100%;
+  background: #375585;
+  position: absolute;
+  top: 0px; left: 0px;
+  z-index: 300;
+  -webkit-transition: all 250ms ease;
+     -moz-transition: all 250ms ease;
+      -ms-transition: all 250ms ease;
+       -o-transition: all 250ms ease;
+          transition: all 250ms ease;
+}

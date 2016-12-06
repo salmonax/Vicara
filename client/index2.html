@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <script language="javascript" type="text/javascript" src="lib/jquery-1.11.0.min.js"></script>
+    <script language="javascript" type="text/javascript" src="lib/angular.min.js"></script>
+    <script language="javascript" type="text/javascript" src="lib/hammer.min.js"></script>
+  </head>
+  <body>
+    <div class="device" ng-app="swipeExample">
+        <div class="screen">
+          <!-- This is the directive part. The key is the snapGrid
+          array, which defines at what points to animate the
+          element to on drag end. -->
+          <div class="content">
+            <div class="carouselWrap" swipe-and-snap>
+              <div id="left" class="float--left">Left</div>
+              <div id="center" class="float--left">Center</div>
+              <div id="right" class="float--left">Right</div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <script src="swipe.js"></script>
+    <script>
+      function initCarousel() {
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        var carouselWidth = width*3;
+        var snaps = JSON.stringify([0,0-width,0-width*2]);
+        $('div.screen')
+          .css('width', width)
+          .css('height', height);
+
+        $('div.carouselWrap')
+          .attr('snap-locations', snaps)
+          .css('width',carouselWidth)
+          .css('-webkit-transform', 'translate3d(' + -width + 'px, 0px, 0px)');
+
+        $('#left').css('width',width);
+        $('#center').css('width',width);
+        $('#right').css('width',width);
+      }
+      initCarousel();
+
+      $(window).on('resize', initCarousel);
+
+    
+    </script>
+  </body>
+</html>

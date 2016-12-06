@@ -12,6 +12,10 @@ app.set('port', (process.env.PORT || 3000));
 
 // mongoose.connect(app.get('db'));
 
+app.get('/', function(req, res) {
+  res.render('index2.html');
+});
+
 app.use(bodyParser.json());
 // console.log(__dirname + '/public');
 app.use(express.static(__dirname + '/../client'));
@@ -29,9 +33,6 @@ app.get('/logout', function(req, res) {
   res.send('logout code go heres');
 });
 
-app.get('/', function(req, res) {
-  res.render('index.html');
-});
 
 app.get('/db_post', function(req, res, next) {
   var elapsed = Math.floor(Math.random()*100000);
