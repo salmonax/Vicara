@@ -2,9 +2,13 @@ var express = require('express');
 // var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var app = express();
-// var port = 3000;
+
+var db = require('./db');
+var User = require('./db/user');
+var Block = require('./db/block');
+
+
 app.set('port', (process.env.PORT || 3000));
-app.set('db', (process.env.DATABASE_URL || 'mongodb://localhost/vicara'))
 
 // mongoose.connect(app.get('db'));
 
@@ -27,7 +31,37 @@ app.get('/logout', function(req, res) {
 
 app.get('/', function(req, res) {
   res.render('index.html');
-})
+});
+
+app.get('/db_post', function(req, res, next) {
+  var elapsed = Math.floor(Math.random()*100000);
+  var newBlock = new Block({
+    username: "TestUser",
+    topic: "Flying Around",
+    elapsed: elapsed,
+    start: Date.now()-elapsed,
+    end: Date.now()
+  });
+  newBlock.save().then(function(newBlock) {
+    console.log('POSTED: ', newBlock);
+    res.json(newBlock);
+  }).catch(function(err) {
+    next(err);
+  });
+  
+});
+
+app.get('/db', function(req, res, next) {
+  Block.find().then(function(blocks) {
+    res.json(blocks);
+  })
+  .catch(function(err) {
+    next(err);
+  })
+
+});
+
+
 
 
 app.listen(app.get('port'));
