@@ -2,24 +2,24 @@ paper_simple_example_json = {
 "name": "root",
 "children": [
 	{
-	"name": "shallow",
+	"name": "Code",
 	"size": 6
 	},
 	{
-	"name": "medium",
+	"name": "Another Head Node",
 	"children": [
-		{"name": "medium1", "size": 1},
-		{"name": "medium2", "size": 2},
-		{"name": "medium3", "size": 3},
-		{"name": "medium4", "size": 4}
+		{"name": "To Do List", "size": 1},
+		{"name": "Random Stuff", "size": 2},
+		{"name": "Gym", "size": 3},
+		{"name": "Walk", "size": 4}
 	]
 	},
 	{
 	"name": "deep",
 	"children": [
-		{"name": "deep1", 
+		{"name": "Mysterious", 
 		"children": [
-			{"name": "Code", "size": 1},
+			{"name": "Write", "size": 1},
 			{"name": "Read", "size": 1},
 			{"name": "Journal Writing", "size": 6},
 			{"name": "MVP", "size": 1},
@@ -28,8 +28,8 @@ paper_simple_example_json = {
 		},
 		{"name": "deep2", 
 		"children": [
-			{"name": "deep2leaf1", "size": 2},
-			{"name": "deep2leaf2", "size": 3}
+			{"name": "Walk Dog", "size": 2},
+			{"name": "Pub Crawl", "size": 3}
 		]
 		}
 	]

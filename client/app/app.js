@@ -22,11 +22,13 @@ angular.module('vicara',[])
     $('#left').css('width',width);
     $('#center').css('width',width);
     $('#right').css('width',width);
+    $('.login').css({transform: 'scale(1.6)'});
   }
   initCarousel();
   loadPomsheet();
 
   $(window).on('resize', initCarousel);
+
 
   // Login page business... Replace!
 

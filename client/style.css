@@ -172,7 +172,7 @@ h1, h2, h3, h4, h5, h6, a {
   font-size:300%;
 }
 .login-header h1 {
-  padding-top: 20%;
+  padding-top: 35%;
   font-size: 1em;
   font-family: monospace;
   /*-webkit-text-stroke: 1px black;*/
@@ -249,4 +249,4 @@ h1, h2, h3, h4, h5, h6, a {
   .login-button {
     margin-bottom:10px;
   }
-}
+}p
