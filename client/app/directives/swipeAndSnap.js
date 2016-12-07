@@ -1,22 +1,13 @@
-/**
-* @file Demonstrates a drag and swipe slide directive.
-* Note: imports another codepen which loads angularJS and hammerJS.
-*/
-
-// Define the angular module.
-angular.module('swipeExample', [])
-
-/**
-* The swipeAndSnap directive.
-*
-* @todo Example.
-*/
-.directive('swipeAndSnap', function () {
+angular.module('vicara')
+.directive('swipeAndSnap', function ($window) {
   return {
-
-    link: function (scope, element, attr) {      
-     
-      var snapLocations = JSON.parse(attr.snapLocations),
+    /*
+      TODO: 
+        restPosition and positionX don't work right for resizing, fix
+    */
+    link: function (scope, element, attr) {   
+      var width = $window.innerWidth;
+      var snapLocations = [0, -width, -(width*2)],
       restPosition = snapLocations[1], // Define the location to end.
       positionX = snapLocations[1]; // The current position.
       
@@ -36,6 +27,9 @@ angular.module('swipeExample', [])
       * The position to snap to.
       */
       var calculate_snap_location = function (position) {
+        // This is for window resizing on desktop
+        width = $window.innerWidth;
+        snapLocations = [0, -width, -(width*2)];
         
         // Used to store each difference between current position and each snap point.
         var currentDiff; 

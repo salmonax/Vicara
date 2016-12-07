@@ -285,7 +285,7 @@ angular.module('vicara')
       .classed('label', true)
       .attr('pointer-events', 'none')
       .attr('x', function(d) {
-        return getCentroid(d.polygon).x-(d.name.length*10); // hard coding for now
+        return getCentroid(d.polygon).x-(d.name.length*8+6); // hard coding for now
       })
       .attr('y', function(d) {
         return getCentroid(d.polygon).y;

@@ -4,17 +4,19 @@
   <meta name="mobile-web-app-capable" content="yes">
   <title>Vicara</title>
   <head>
-    <!-- Libraries -->
+    <!-- Android Screen Lock -->
     <script> 
       if (window.navigator.userAgent.match(/Android/i)) {
         window.screen.orientation.lock('portrait');
       }
     </script>
+    <!-- Libraries -->
     <script language="javascript" type="text/javascript" src="lib/jquery-1.11.0.min.js"></script>
     <script language="javascript" type="text/javascript" src="lib/d3.js"></script>
     <script language="javascript" type="text/javascript" src="lib/angular.min.js"></script>
+    <script language="javascript" type="text/javascript" src="lib/hammer.min.js"></script>
 
-    <!-- Required D3 script -->
+    <!-- Required D3 scripts -->
     <script language="javascript" type="text/javascript" src="lib/ConvexHull.js"></script>
     <script language="javascript" type="text/javascript" src="lib/PowerDiagram.js"></script>
     <script language="javascript" type="text/javascript" src="lib/VoronoiTreemap.js"></script>
@@ -33,13 +35,26 @@
       {{ activePoly }}
       {{ elapsed }}
     </div>
-
-    <div id="treemap" class='vicara'></div>
+    <div class="device" ng-app="vicara">
+        <div class="screen">
+          <!-- This is the directive part. The key is the snapGrid
+          array, which defines at what points to animate the
+          element to on drag end. -->
+          <div class="content">
+            <div class="carouselWrap" swipe-and-snap>
+              <div id="left" class="float--left vicara"></div>
+              <div id="center" class="float--left"><div id="treemap" class='vicara'></div></div>
+              <div id="right" class="float--left vicara"></div>
+            </div>
+          </div>
+        </div>
+    </div>
 
     <script src="app/app.js"></script>
     <script src="app/services/voronoi.js"></script>
     <script src="app/services/util.js"></script>
     <script src="app/controllers/MainCtrl.js"></script>
+    <script src="app/directives/swipeAndSnap.js"></script>
   </body>
   <!-- // <script src="main_graph.js"></script> -->
 </html>

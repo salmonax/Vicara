@@ -12,9 +12,9 @@ app.set('port', (process.env.PORT || 3000));
 
 // mongoose.connect(app.get('db'));
 
-app.get('/', function(req, res) {
-  res.render('index2.html');
-});
+// app.get('/', function(req, res) {
+//   res.render('index2.html');
+// });
 
 app.use(bodyParser.json());
 // console.log(__dirname + '/public');
