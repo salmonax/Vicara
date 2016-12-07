@@ -1,5 +1,8 @@
 angular.module('vicara',[])
 .run(function() {
+  function loadPomsheet() {
+    $('#pomsheet').load('/data/pomsheet.txt');
+  }
   function initCarousel() {
     var width = window.innerWidth;
     var height = window.innerHeight;
@@ -19,6 +22,7 @@ angular.module('vicara',[])
     $('#right').css('width',width);
   }
   initCarousel();
+  loadPomsheet();
 
   $(window).on('resize', initCarousel);
 });

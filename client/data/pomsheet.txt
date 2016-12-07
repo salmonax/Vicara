@@ -30,8 +30,8 @@
 
 12/4/2016
 
-13  Email, Justin: write a bunch of bullshit and don't send it yet      X
-14  Email, Justin: write some journal stuff, turn it into an e-mail and send it XX
+13  Email, Friend: write a bunch of bullshit and don't send it yet      X
+14  Email, Friend: write some journal stuff, turn it into an e-mail and send it XX
 
 16.5  MVP, Voronoi: start copying over the code and looking through it    X
 17  ~ MVP, Voronoi: irritatingly slackjaw over stupid bower and stupid index.html X
