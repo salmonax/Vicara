@@ -2,6 +2,8 @@ angular.module('vicara',[])
 .run(function() {
   function loadPomsheet() {
     $('#pomsheet').load('/data/pomsheet.txt');
+
+
   }
   function initCarousel() {
     var width = window.innerWidth;
@@ -25,4 +27,19 @@ angular.module('vicara',[])
   loadPomsheet();
 
   $(window).on('resize', initCarousel);
+
+  // Login page business... Replace!
+
+  // $('.error-page').hide(0);
+
+  // $('.login-button , .no-access').click(function(){
+  //   $('.login').slideUp(500);
+  //   $('.error-page').slideDown(1000);
+  // });
+
+  // $('.try-again').click(function(){
+  //   $('.error-page').hide(0);
+  //   $('.login').slideDown(1000);
+  // });
+
 });

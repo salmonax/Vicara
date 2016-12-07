@@ -43,7 +43,7 @@ path {
 }
 text.label {
   font-family: sans-serif;
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 .vicara { 
@@ -94,7 +94,7 @@ Crazy stuff for last-minute swipe effect
 
 div.carouselWrap {
   /* Set width to 3x view on init */
-  background: white;
+  /*background: white;*/
   height: 100%;
   color: white;
   /*font-family: "Gill Sans / Gill Sans MT", sans-serif;*/
@@ -124,7 +124,7 @@ body {
 div.device {
 /*  height: 798px; width: 378px;
   width: 440px; height: 807px;*/
-  background: url('http://creativeda.sh/sandbox/bounce_menu/img/iphone_black.png') no-repeat center center; 
+/*  background: url('http://creativeda.sh/sandbox/bounce_menu/img/iphone_black.png') no-repeat center center; */
   -webkit-background-size: cover;
      -moz-background-size: cover;
        -o-background-size: cover;
@@ -150,4 +150,103 @@ div.content {
       -ms-transition: all 250ms ease;
        -o-transition: all 250ms ease;
           transition: all 250ms ease;
+}
+
+/* Ugh, no time, just grabbing */
+
+body {
+/*  background:url('http://wallpaperscraft.com/image/london_ride_river_house_dock_9656_3840x2400.jpg?orig=3');*/
+  margin:0px;
+  font-family: sans-serif;
+}
+h1, h2, h3, h4, h5, h6, a {
+  margin:0; padding:0;
+}
+.login {
+  margin:0 auto;
+  max-width:500px;
+}
+.login-header {
+  color:#fff;
+  text-align:center;
+  font-size:300%;
+}
+.login-header h1 {
+  padding-top: 20%;
+  font-size: 1em;
+  font-family: monospace;
+  /*-webkit-text-stroke: 1px black;*/
+   text-shadow: 0px 0px 0px #000;
+}
+.login-form {
+  border:2px solid rgb(50,50,80);
+  background: rgba(60,80,100,0.5);
+  border-radius:0px;
+  box-shadow:0px 0px 0px #000;
+}
+.login-form h3 {
+  text-align:left;
+  margin-left:40px;
+  color:#fff;
+}
+.login-form {
+  box-sizing:border-box;
+  padding-top:15px;
+  margin:50px auto;
+  text-align:center;
+  overflow: hidden;
+}
+.login input[type="text"],
+.login input[type="password"] {
+  width: 100%;
+  max-width:400px;
+  height:30px;
+  font-family: sans-serif;
+  margin:10px 0;
+  border-radius:0px;
+  border:2px solid rgb(50,50,80);
+  outline:none;
+  padding-left:10px;
+}
+.login-form input[type="button"] {
+  color: rgb(190,190,190);
+  height:30px;
+  width:100px;
+  background: rgb(80,80,100);
+  border:1px solid rgb(50,50,50);
+  border-radius:0px;
+  text-transform:uppercase;
+  font-family: sans-serif;
+  cursor:pointer;
+}
+.sign-up{
+  color:#f2f2f2;
+  margin-left:-400px;
+  cursor:pointer;
+  text-decoration:underline;
+}
+.no-access {
+  color:#f2f2f2;
+  margin:20px 0px 20px -300px;
+  text-decoration:underline;
+  cursor:pointer;
+}
+.try-again {
+  color:#f2f2f2;
+  text-decoration:underline;
+  cursor:pointer;
+}
+
+/*Media Querie*/
+@media only screen and (min-width : 150px) and (max-width : 530px){
+  .login-form h3 {
+    text-align:center;
+    margin:0;
+  }
+  .sign-up, .no-access {
+    margin:10px 0;
+  }
+  .login-button {
+    margin-bottom:10px;
+  }
 }

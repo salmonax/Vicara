@@ -12,6 +12,7 @@
     </script>
     <!-- Libraries -->
     <script language="javascript" type="text/javascript" src="lib/jquery-1.11.0.min.js"></script>
+    // <script language="javascript" type="text/javascript" src="lib/jquery-ui.min.js"></script>
     <script language="javascript" type="text/javascript" src="lib/d3.js"></script>
     <script language="javascript" type="text/javascript" src="lib/angular.min.js"></script>
     <script language="javascript" type="text/javascript" src="lib/hammer.min.js"></script>
@@ -31,10 +32,10 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body ng-app='vicara' ng-controller="MainCtrl">
-    <div id="debug">
+<!--     <div id="debug">
       {{ activePoly }}
       {{ elapsed }}
-    </div>
+    </div> -->
     <div class="device" ng-app="vicara">
         <div class="screen">
           <!-- This is the directive part. The key is the snapGrid
@@ -49,7 +50,28 @@
                 </div>
               </div>
               <div id="center" class="float--left"><div id="treemap" class='vicara'></div></div>
-              <div id="right" class="float--left vicara"></div>
+              <div id="right" class="float--left vicara">
+                <div class="login">
+                  <div class="login-header">
+                    <h1>Welcome to Vicara.</h1>
+                  </div>
+                  <div class="login-form">
+                    <h3>Username:</h3>
+                    <input type="text" placeholder="Username"/><br>
+                    <h3>Password:</h3>
+                    <input type="password" placeholder="Password"/>
+                    <br>
+                    <input type="button" value="Login" class="login-button"/>
+                    <br>
+                    <a class="sign-up">Sign Up!</a>
+                    <br>
+                    <h6 class="no-access"></h6>
+                  </div>
+                </div>
+                <div class="error-page">
+                  <div class="try-again">Error: Try again?</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
